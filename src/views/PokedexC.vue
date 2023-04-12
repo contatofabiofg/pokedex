@@ -172,7 +172,13 @@ function logo(name) {
                   </div>
                 </div>
                 <div class="w-5 z-10">
-                  <img :src="logo(name)" alt="" role="presentation" />
+                  <img v-if="name == 'hp'" src="../assets/hp.png" alt="" role="presentation" />
+                  <img v-if="name == 'speed'" src="../assets/speed.png" alt="" role="presentation" />
+                  <img v-if="name == 'attack'" src="../assets/attack.png" alt="" role="presentation" />
+                  <img v-if="name == 'defense'" src="../assets/defense.png" alt="" role="presentation" />
+                  <img v-if="name == 'special-attack'" src="../assets/special-attack.png" alt="" role="presentation" />
+                  <img v-if="name == 'special-defense'" src="../assets/special-defense.png" alt="" role="presentation" />
+           
                 </div>
               </div>
             </div>
