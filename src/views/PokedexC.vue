@@ -32,10 +32,12 @@ function searchPokemon() {
       api.getPokemons(pokemonName.value.toLowerCase()).then((response) => {
         looking.value = false
         pokemonFounded.value = response.data
+   
+ 
         registerPokemonStats(
           pokemonFounded.value.stats,
           pokemonFounded.value.name,
-          pokemonFounded.value.sprites.front_default
+          pokemonFounded.value.sprites.versions['generation-v']['black-white'].animated.front_default
         )
         searchEspecie(pokemonFounded.value.name)
       })
@@ -88,7 +90,7 @@ function registerPokemonStats(stats) {
     let statValue = element.base_stat
     let obj = {}
     obj[statName] = statValue
-    console.log(obj)
+
     pokemonStats.value.push(obj)
   })
 }
@@ -99,27 +101,23 @@ function toUpper(name) {
 }
 
 function logo(name) {
-  return new URL('../assets/pixel/' + name + '.png', import.meta.url).href
+  return new URL('../assets/' + name + '.png', import.meta.url).href
 }
 </script>
 
 <template>
-  <div
-    id="container"
-    class="w-[400px] h-[630px] bg-gradient-to-r from-red-500 to-red-400 border-2 border-black p-3 rounded-md flex flex-col items-center drop-shadow-lg"
-  >
-    <div><img src="../assets/logo.png" alt="" style="width: 200px" /></div>
 
-    <section
-      v-if="!pokemonSelected"
-      class="w-full flex flex-col items-center mt-3"
-    >
+  <div
+      class="img relative min-w-[700px] h-[600px]"
+  >
+
+    
       <input
         v-model="pokemonName"
-        placeholder="Digite três letras pra iniciar a busca"
+        placeholder="Nome completo do Pokemon"
         type="text"
         @input="searchPokemon"
-        class="w-full rounded-md p-1 my-2 outline-none duration-100 text-lg border-2 border-black"
+        class="absolute w-[250px] bottom-[50px] left-[50px] rounded-md p-1 my-2 outline-none duration-100 text-lg border-2 border-zinc-600"
       />
       <div class="flex items-center">
         <img
@@ -136,20 +134,19 @@ function logo(name) {
           Não encontramos nenhum Pokémon. Faça uma nova busca.
         </p>
       </div>
-
-      <div v-if="pokemonFounded" class="w-full">
-        <div
-          class="cursor-pointer w-full bg-white rounded-md flex p-2 border-2 border-black"
-        >
-          <div
-            class="bg-gradient-to-tr from-blue-300 to-blue-200 w-[45%] flex rounded-md items-center justify-center"
-          >
-            <img
-              :src="pokemonFounded.sprites.front_default"
+        <img
+        v-if="pokemonFounded"
+              :src="pokemonFounded.sprites.versions['generation-v']['black-white'].animated.front_default"
               alt="Pokemon Image"
+              class="absolute top-[270px] left-[150px] scale-[200%]"
             />
-          </div>
-          <div class="w-full ml-2 text-[12px]">
+
+        <div
+        v-if="pokemonFounded"
+          class="absolute right-10 top-[190px] cursor-pointer w-[240px] bg-white rounded-md flex p-2 border-2 border-zinc-500"
+         >
+        
+          <div class="w-full text-[12px]">
             <div>
               <div class="p-1 font-bold text-xl">
                 {{ toUpper(pokemonFounded.name) }}
@@ -164,7 +161,7 @@ function logo(name) {
               <div
                 v-for="(item, name) in obj"
                 :key="name"
-                class="relative flex w-full justify-between p-1 overflow-hidden"
+                class="relative flex w-full justify-between px-1 overflow-hidden"
               >
               <div :style="'width: '+ item + '%'" class="absolute top-0 left-0 h-full bg-gradient-to-r from-red-100 to-red-50 z-0"></div>
                 <div class="flex z-10">
@@ -174,37 +171,46 @@ function logo(name) {
                     >/100
                   </div>
                 </div>
-                <div class="w-5">
+                <div class="w-5 z-10">
                   <img :src="logo(name)" alt="" role="presentation" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-if="listEvolutions.length > 0" class="w-full">
-        <h4 class="my-2">Outros estágios</h4>
-        <div class="flex w-full">
+
+        <div v-if="listEvolutions.length > 1" class="absolute bottom-10 right-10 w-[240px]">
+        <h4 class="w-full text-center">Outros estágios</h4>
+        <div class="flex w-full justify-center gap-1">
           <div
             v-for="(pokemon, index) in listEvolutions"
             :key="index"
-            class="flex"
-          >
+                     >
             <div
-              class="pointer bg-white rounded-md mr-2 p-2 flex flex-col items-center cursor-pointer border-2 border-black"
+              class="w-full bg-white rounded-md mx-3 p-1 flex flex-col items-center cursor-pointer border-2 border-black"
               v-if="pokemon.name != pokemonName.toLowerCase()"
               @click=";(pokemonName = pokemon.name), searchPokemon()"
             >
-              <div class="bg-gradient-to-tr from-blue-300 to-blue-200">
-                <img :src="pokemon.sprites.front_default" alt="Pokemon Image" />
-              </div>
+              
+                <img :src="pokemon.sprites.versions['generation-v']['black-white'].animated.front_default" alt="Pokemon Image" class="max-h-[40px] scale-150"/>
+             
               <div class="mt-2">{{ toUpper(pokemon.name) }}</div>
             </div>
+            
           </div>
         </div>
       </div>
-    </section>
-  </div>
+      </div>
+     
+
+
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.img {
+  background-image: url('../assets/pokedex.png');
+  background-size: cover;
+  background-position: center;
+}
+</style>
