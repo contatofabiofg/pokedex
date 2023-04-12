@@ -108,7 +108,7 @@ function logo(name) {
 <template>
 
   <div
-      class="img relative min-w-[700px] h-[600px]"
+      class="img relative min-w-[700px] h-[600px] scale-[55%] lg:scale-100"
   >
 
     
@@ -119,15 +119,15 @@ function logo(name) {
         @input="searchPokemon"
         class="absolute w-[250px] bottom-[50px] left-[50px] rounded-md p-1 my-2 outline-none duration-100 text-lg border-2 border-zinc-600"
       />
-      <div class="flex items-center">
+
         <img
           src="../assets/spinner.gif"
           alt="Procurando..."
           v-if="looking && !pokemonFounded"
           style="width: 50px"
-          class="mt-10"
+          class="absolute top-[270px] left-[150px]"
         />
-      </div>
+    
 
       <div v-if="!looking && !pokemonFounded && pokemonName.length > 2">
         <p class="text-[12px]">
@@ -184,6 +184,9 @@ function logo(name) {
             </div>
           </div>
         </div>
+        <div v-else class="absolute right-10 top-[190px]">
+          <img src="../assets/empty.png" alt="">
+        </div>
 
         <div v-if="listEvolutions.length > 1" class="absolute bottom-10 right-10 w-[240px]">
         <h4 class="w-full text-center">Outros estágios</h4>
@@ -206,7 +209,14 @@ function logo(name) {
           </div>
         </div>
       </div>
+      
       </div>
+      <div class="w-full font-bold mt-2 text-center opacity-75">
+      Desenvolvido por
+      <a class="text-red-800" href="https://github.com/contatofabiofg" target="_blank">
+        Fábio Gonçalves</a
+      >
+    </div>
      
 
 
