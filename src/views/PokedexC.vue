@@ -129,8 +129,8 @@ function logo(name) {
         />
     
 
-      <div v-if="!looking && !pokemonFounded && pokemonName.length > 2">
-        <p class="text-[12px]">
+      <div class="bg-white/75 absolute top-[250px] left-[100px] w-[150px]" v-if="!looking && !pokemonFounded && pokemonName.length > 2">
+        <p class=" font-bold text-center">
           Não encontramos nenhum Pokémon. Faça uma nova busca.
         </p>
       </div>
