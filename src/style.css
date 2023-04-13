@@ -17,7 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('./assets/wallpaper.png');
+  background-image: url('./assets/wallpaper.jpg');
   background-position: center;
   background-size: cover;
 }
